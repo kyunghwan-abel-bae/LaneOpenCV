@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>parts/PartOutput.qml</file>
+        <file>video/MultiVideoOutput.qml</file>
+        <file>video/MultiVideoOutputComponentBody.qml</file>
+        <file>control/ControlBody.qml</file>
+    </qresource>
+</RCC>
