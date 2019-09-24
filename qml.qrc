@@ -2,9 +2,11 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>parts/PartOutput.qml</file>
         <file>video/MultiVideoOutput.qml</file>
         <file>video/MultiVideoOutputComponentBody.qml</file>
         <file>control/ControlBody.qml</file>
+        <file>custom_control/BCheckBox.qml</file>
+        <file>custom_control/BSlider.qml</file>
+        <file>control/ControlOutputTypes.qml</file>
     </qresource>
 </RCC>

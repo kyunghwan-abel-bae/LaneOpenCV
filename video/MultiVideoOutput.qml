@@ -7,7 +7,7 @@ import QtMultimedia 5.5
 
 // video output which supports both of Media and Camera
 // arguments
-// setMediaSource
+// setvideoSource
 // setVideoFilter
 // play()
 // stop()
@@ -17,24 +17,32 @@ import QtMultimedia 5.5
 Item {
     id: root
 
-    readonly property int k_video_type_undefined: -1
-    readonly property int k_video_type_camera: 1
-    readonly property int k_video_type_media: 2
+    readonly property int k_output_type_undefined: -1
+    readonly property int k_output_type_camera: 1
+    readonly property int k_output_type_video: 2
 
-    property int videoType: k_video_type_undefined
-    property int mediaLoops: MediaPlayer.Infinite
+    property int outputType: k_output_type_undefined
+    property int videoLoops: MediaPlayer.Infinite
 
-    property string mediaSource
+    property string videoSource
+    property string playingVideoSource: "init"
 
-    property var videoFilters: []
+    property var outputFilters: []
 
-    onVideoTypeChanged: loaderOutput.updateSourceComponent()
+    onOutputTypeChanged: loaderOutput.updateSourceComponent()
 
-    function startCamera() { videoType = k_video_type_camera }
-    function startMedia() { videoType = k_video_type_media }
+    function startCamera() { outputType = k_output_type_camera }
+    function startVideo() {
+        console.log("start video")
+        if(videoSource !== playingVideoSource) {
+            loaderOutput.item.start()
+        }
 
-    function stopCamera() { videoType = k_video_type_undefined }
-    function stopMedia() { videoType = k_video_type_undefined }
+        outputType = k_output_type_video
+    }
+
+    function stopCamera() { outputType = k_output_type_undefined }
+    function stopVideo() { outputType = k_output_type_undefined }
 
     // using Loader for QML's potential risks
     // when change the video type.
@@ -51,10 +59,10 @@ Item {
             if(loaderOutput.item !== null)
                 loaderOutput.item.stop()
 
-            if(videoType == k_video_type_camera)
+            if(outputType == k_output_type_camera)
                 sourceComponent = componentCamera
-            else if(videoType == k_video_type_media)
-                sourceComponent = componentMedia
+            else if(outputType == k_output_type_video)
+                sourceComponent = componentVideo
             else
                 sourceComponent = componentMock
         }
@@ -81,7 +89,7 @@ Item {
                 VideoOutput {
                     source: camera
 
-                    filters: videoFilters
+                    filters: outputFilters
 
                     fillMode: VideoOutput.PreserveAspectFit
 
@@ -91,26 +99,30 @@ Item {
         }
 
         Component {
-            id: componentMedia
+            id: componentVideo
 
             MultiVideoOutputComponentBody {
                 Component.onCompleted:  {
-                    start.connect(media.play)
+                    start.connect(media.safeStart)
                     stop.connect(media.stop)
                 }
 
                 MediaPlayer {
                     id: media
 
-                    loops: mediaLoops
+                    loops: videoLoops
 
-                    source: mediaSource
+                    function safeStart() {
+                        media.stop()
+                        source = playingVideoSource = videoSource
+                        media.play()
+                    }
                 }
 
                 VideoOutput {
                     source: media
 
-                    filters: videoFilters
+                    filters: outputFilters
 
                     fillMode: VideoOutput.PreserveAspectFit
 
