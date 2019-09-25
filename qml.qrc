@@ -8,5 +8,7 @@
         <file>custom_control/BCheckBox.qml</file>
         <file>custom_control/BSlider.qml</file>
         <file>control/ControlOutputTypes.qml</file>
+        <file>control/ControlFlip.qml</file>
+        <file>control/ControlFilter.qml</file>
     </qresource>
 </RCC>

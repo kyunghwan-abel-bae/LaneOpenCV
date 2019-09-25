@@ -10,6 +10,8 @@ Rectangle {
     property bool isRecordingON: true
 
     ///... copy codes from the old one whenever component is added.
+    property alias isHorizontalFlipChecked: controlFlip.isHorizontalFlipChecked
+    property alias isVerticalFlipChecked: controlFlip.isVerticalFlipChecked
 
     property var outputFilter
     property var videoOutput
@@ -85,10 +87,18 @@ Rectangle {
             }
 
             Item {
+                width: 1
+                height: root.height * 0.01
+            }
+
+
+            Item {
                 id: itemStartSwitch
 
                 width: parent.width
                 height: root.height * 0.08
+
+                enabled: (controlOutputTypes.statusChecked !== -1)
 
                 Item {
                     anchors.fill: parent
@@ -127,6 +137,23 @@ Rectangle {
                 width: 1; height: parent.height * 0.02
             }
 
+            ControlFlip {
+                id: controlFlip
+
+                width: parent.width
+
+                enabled: switchStart.checked
+            }
+
+            ControlFilter {
+                id: controlFilter
+
+                width: parent.width
+
+                enabled: switchStart.checked
+
+                targetFilter: outputFilter
+            }
         }
     }
 }
