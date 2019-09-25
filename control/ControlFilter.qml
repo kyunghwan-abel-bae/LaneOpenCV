@@ -62,6 +62,57 @@ GroupBox {
 
     property var targetFilter
 
+    onIsMaskColorCheckedChanged: {
+        isHSVChecked = true
+    }
+
+    onIsROICheckedChanged: {
+        if(isROIChecked) {
+            var map = targetFilter.map_points_values();
+
+            textPoint0_X.text = valuePoint0_X = Math.round(map.roi_point0_x)
+            textPoint1_X.text = valuePoint1_X = Math.round(map.roi_point1_x)
+            textPoint2_X.text = valuePoint2_X = Math.round(map.roi_point2_x)
+            textPoint3_X.text = valuePoint3_X = Math.round(map.roi_point3_x)
+
+            textPoint0_Y.text = valuePoint0_Y = Math.round(map.roi_point0_y)
+            textPoint1_Y.text = valuePoint1_Y = Math.round(map.roi_point1_y)
+            textPoint2_Y.text = valuePoint2_Y = Math.round(map.roi_point2_y)
+            textPoint3_Y.text = valuePoint3_Y = Math.round(map.roi_point3_y)
+        }
+    }
+
+    onIsFinalCheckedChanged: {
+        if(isFinalChecked) {
+            isHSVChecked = true
+            isMaskChecked = true
+            isMaskColorChecked = true
+            isMaskColorFinderChecked = false
+            isGrayChecked = true
+            isGaussianChecked = true
+            isCannyChecked = true
+            isROIChecked = true
+            isLineOnlyChecked = true
+            isSteeringChecked = true
+            isSteeringStabilizationChecked = true
+            isLineOnImageChecked = true
+        }
+        else {
+            isLineOnImageChecked = false
+            isLineOnlyChecked = false
+            isSteeringStabilizationChecked = false
+            isSteeringChecked = false
+            isROIChecked = false
+            isCannyChecked = false
+            isGaussianChecked = false
+            isGrayChecked = false
+            isMaskColorFinderChecked = false
+            isMaskColorChecked = false
+            isMaskChecked = false
+            isHSVChecked = false
+        }
+    }
+
     Column {
         anchors.fill: parent
 
@@ -176,6 +227,83 @@ GroupBox {
 
                         spacing: height * 0.05
 
+                        ControlBGRTextField {
+                            id: textFieldLowerWhite
+
+                            width: parent.width
+                            height: checkMaskColor.height
+
+                            valueB: valueLowerWhiteB
+                            valueG: valueLowerWhiteG
+                            valueR: valueLowerWhiteR
+
+                            fontPixelSize: checkMaskColor.fontPixelSize_contentItem
+
+                            labelValue: qsTr("Lower White (B,G,R)")
+
+                            onValueBChanged: valueLowerWhiteB = valueB
+                            onValueGChanged: valueLowerWhiteG = valueG
+                            onValueRChanged: valueLowerWhiteR = valueR
+                        }
+
+                        ControlBGRTextField {
+                            id: textFieldUpperWhite
+
+                            width: parent.width
+                            height: checkMaskColor.height
+
+                            valueB: valueUpperWhiteB
+                            valueG: valueUpperWhiteG
+                            valueR: valueUpperWhiteR
+
+                            fontPixelSize: checkMaskColor.fontPixelSize_contentItem
+
+                            labelValue: qsTr("Upper White (B,G,R)")
+
+                            onValueBChanged: valueUpperWhiteB = valueB
+                            onValueGChanged: valueUpperWhiteG = valueG
+                            onValueRChanged: valueUpperWhiteR = valueR
+                        }
+
+                        ControlBGRTextField {
+                            id: textFieldLowerYellow
+
+                            width: parent.width
+                            height: checkMaskColor.height
+
+                            valueB: valueLowerYellowB
+                            valueG: valueLowerYellowG
+                            valueR: valueLowerYellowR
+
+                            fontPixelSize: checkMaskColor.fontPixelSize_contentItem
+
+                            labelValue: qsTr("Lower Yellow (B,G,R)")
+
+                            onValueBChanged: valueLowerYellowB = valueB
+                            onValueGChanged: valueLowerYellowG = valueG
+                            onValueRChanged: valueLowerYellowR = valueR
+                        }
+
+                        ControlBGRTextField {
+                            id: textFieldUpperYellow
+
+                            width: parent.width
+                            height: checkMaskColor.height
+
+                            valueB: valueUpperYellowB
+                            valueG: valueUpperYellowG
+                            valueR: valueUpperYellowR
+
+                            fontPixelSize: checkMaskColor.fontPixelSize_contentItem
+
+                            labelValue: qsTr("Upper Yellow (B,G,R)")
+
+                            onValueBChanged: valueUpperYellowB = valueB
+                            onValueGChanged: valueUpperYellowG = valueG
+                            onValueRChanged: valueUpperYellowR = valueR
+                        }
+// added by KH - I think this should be gone.
+/*
                         Row {
                             width: parent.width
                             height: checkMaskColor.height
@@ -699,6 +827,7 @@ GroupBox {
                                 }
                             }
                         }
+              */
                     }
                 }
 
@@ -1004,6 +1133,77 @@ GroupBox {
 
                 spacing: width * 0.05
 
+                ControlROITextField {
+                    id: textFieldPoint0
+
+                    width: parent.width
+                    height: checkROI.height
+
+                    valueX: valuePoint0_X
+                    valueY: valuePoint0_Y
+
+                    fontPixelSize: checkROI.font.pixelSize
+
+                    valueLabel: qsTr("Point0(x,y)")
+
+                    onValueXChanged: valuePoint0_X = valueX
+                    onValueYChanged: valuePoint0_Y = valueY
+                }
+
+                ControlROITextField {
+                    id: textFieldPoint1
+
+                    width: parent.width
+                    height: checkROI.height
+
+                    valueX: valuePoint1_X
+                    valueY: valuePoint1_Y
+
+                    fontPixelSize: checkROI.font.pixelSize
+
+                    valueLabel: qsTr("Point1(x,y)")
+
+                    onValueXChanged: valuePoint1_X = valueX
+                    onValueYChanged: valuePoint1_Y = valueY
+                }
+
+                ControlROITextField {
+                    id: textFieldPoint2
+
+                    width: parent.width
+                    height: checkROI.height
+
+                    valueX: valuePoint2_X
+                    valueY: valuePoint2_Y
+
+                    fontPixelSize: checkROI.font.pixelSize
+
+                    valueLabel: qsTr("Point2(x,y)")
+
+                    onValueXChanged: valuePoint2_X = valueX
+                    onValueYChanged: valuePoint2_Y = valueY
+                }
+
+                ControlROITextField {
+                    id: textFieldPoint3
+
+                    width: parent.width
+                    height: checkROI.height
+
+                    valueX: valuePoint3_X
+                    valueY: valuePoint3_Y
+
+                    fontPixelSize: checkROI.font.pixelSize
+
+                    valueLabel: qsTr("Point3(x,y)")
+
+                    onValueXChanged: valuePoint3_X = valueX
+                    onValueYChanged: valuePoint3_Y = valueY
+                }
+
+                // added by KH
+
+/*
                 Row {
                     width: parent.width
                     height: checkROI.height
@@ -1503,6 +1703,7 @@ GroupBox {
                         verticalAlignment: Text.AlignVCenter
                     }
                 }
+*/
             }
         }
 

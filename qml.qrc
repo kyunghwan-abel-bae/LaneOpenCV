@@ -10,5 +10,9 @@
         <file>control/ControlOutputTypes.qml</file>
         <file>control/ControlFlip.qml</file>
         <file>control/ControlFilter.qml</file>
+        <file>control/ControlBGRTextField.qml</file>
+        <file>control/ControlROITextField.qml</file>
+        <file>custom_control/BTextArea.qml</file>
+        <file>control/ControlLog.qml</file>
     </qresource>
 </RCC>
