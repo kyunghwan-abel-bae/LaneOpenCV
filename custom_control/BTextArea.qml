@@ -1,22 +1,24 @@
 import QtQuick 2.3
 
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.4
 import QtQuick.Controls 2.0
 Item {
-    property string valueText
+    id: root
+
+    property alias valueText: textLog.text
 
     ScrollView {
-        //property alias valueText: textLog.text
+        id: scrollLog
+
+        width: parent.width
+        height: parent.height
 
         horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
         TextArea {
             id: textLog
 
-            width: parent.width * 0.9
-            height: width
-
-            text: valueText
+            width: root.width * 0.9
 
             readOnly: true
             selectByMouse: true
@@ -41,3 +43,4 @@ Item {
         }
     }
 }
+

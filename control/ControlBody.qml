@@ -1,5 +1,8 @@
 import QtQuick 2.3
 
+// added by KH - should be removed
+import QtQuick.Controls 1.4
+
 import QtQuick.Controls 2.0
 
 // added by KH - should be removed
@@ -65,7 +68,9 @@ Rectangle {
             }
 
 //            console.log("hello")
-//            controlLog.valueText = "hello"
+            var str_value_text = controlLog.valueText
+            str_value_text.append("hi")
+            controlLog.valueText = str_value_text
 
             /*
             if(map_bool_keys.length > 0) {
@@ -243,27 +248,19 @@ Rectangle {
                 width: 1; height: parent.height * 0.02
             }
 
-            BTextArea {
-                width: parent.width
-                height: width
-
-                valueText: "HELLO"
-//                text: "HELLO"
-            }
-
-/*
             ControlLog {
                 id: controlLog
 
                 width: parent.width
                 height: width
 
+                enabled: switchStart.checked
+
                 valueButtonText: isRecordingON ? qsTr("STOP RECORDING") : qsTr("START RECORDING")
-//                valueText: "NNN"
 
                 onSingnalButtonLogClicked: isRecordingON = !isRecordingON
             }
-*/
+
             Item {
                 width: 1; height: parent.height * 0.02
             }

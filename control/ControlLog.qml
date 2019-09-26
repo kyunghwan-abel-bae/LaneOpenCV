@@ -7,9 +7,9 @@ import "../custom_control"
 GroupBox {
     id: groupLog
 
-    font.pixelSize: fontSize11
-
     title: qsTr("Logs")
+
+    font.pixelSize: fontSize11
 
     property string valueButtonText: "Button"
 
@@ -19,6 +19,7 @@ GroupBox {
 
     Button {
         id: buttonLog
+
         width: parent.width
         height: parent.height * 0.1
 
@@ -31,9 +32,7 @@ GroupBox {
         id: scrollLog
 
         width: parent.width
-        height: width
-
-        valueText: "apple"
+        height: parent.height - buttonLog.height
 
         anchors.top: buttonLog.bottom
     }
