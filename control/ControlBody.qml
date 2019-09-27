@@ -15,6 +15,8 @@ Rectangle {
 
     property bool isRecordingON: true
 
+    property int filterTimeInterval: 3000
+
     ///... copy codes from the old one whenever component is added.
     property var outputFilter
     property var videoOutput
@@ -32,15 +34,56 @@ Rectangle {
         id: timerControl
 
         running: true
-        interval: 3000; repeat: true
+        interval: filterTimeInterval; repeat: true
 
         onTriggered: {
-            var map_bool = mapFilterBool
-            var map_bool_keys = Object.keys(map_bool)
+//            var map_bool = mapFilterBool
+//            var map_bool_keys = Object.keys(map_bool)
+            var map_bool_keys = Object.keys(mapFilterBool)
 
             var is_log_activated = false
 
-            // for test
+            if(map_bool_keys.length > 0) {
+                console.log("map_bool_keys : " + map_bool_keys)
+                outputFilter.setMapBoolForProcess(mapFilterBool)
+                mapFilterBool = {}
+
+                is_log_activated = true
+            }
+
+            // roi
+            if(controlFilter.isROIChecke) {
+                var map_roi_points = {}
+
+                map_roi_points.roi_point0_x = controlFilter.valuePoint0_X
+                map_roi_points.roi_point1_x = controlFilter.valuePoint1_X
+                map_roi_points.roi_point2_x = controlFilter.valuePoint2_X
+                map_roi_points.roi_point3_x = controlFilter.valuePoint3_X
+
+                map_roi_points.roi_point0_y = controlFilter.valuePoint0_Y
+                map_roi_points.roi_point1_y = controlFilter.valuePoint1_Y
+                map_roi_points.roi_point2_y = controlFilter.valuePoint2_Y
+                map_roi_points.roi_point3_y = controlFilter.valuePoint3_Y
+
+                outputFilter.set_map_points_values(map_roi_points);
+
+                // test by KH -- Is it really required?
+                is_log_activated = true
+            }
+
+            // Is it really required?
+            // Because of map_bool_keys,
+            // I guess that is_log_activated is already changed.
+            if(controlFilter.isMaskColorChecked
+                    || controlFilter.isMaskColorFinderChecked) {
+                is_log_activated = true
+            }
+
+
+
+
+            // test by KH -- should be removed
+            /*
             if(map_bool_keys.length > 0) {
                 console.log("map_bool : " + JSON.stringify(map_bool))
                 mapFilterBool = {}
@@ -69,9 +112,10 @@ Rectangle {
 
 //            console.log("hello")
             var str_value_text = controlLog.valueText
-            str_value_text.append("hi")
+            str_value_text += "hello22"
             controlLog.valueText = str_value_text
 
+            */
             /*
             if(map_bool_keys.length > 0) {
                 filter.setMapBoolForProcess(map_bool)

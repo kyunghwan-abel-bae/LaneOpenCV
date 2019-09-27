@@ -70,6 +70,20 @@ GroupBox {
         if(isROIChecked) {
             var map = targetFilter.map_points_values();
 
+            valuePoint0_X = Math.round(map.roi_point0_x)
+            valuePoint1_X = Math.round(map.roi_point1_x)
+            valuePoint2_X = Math.round(map.roi_point2_x)
+            valuePoint3_X = Math.round(map.roi_point3_x)
+
+            valuePoint0_Y = Math.round(map.roi_point0_y)
+            valuePoint1_Y = Math.round(map.roi_point1_y)
+            valuePoint2_Y = Math.round(map.roi_point2_y)
+            valuePoint3_Y = Math.round(map.roi_point3_y)
+
+            console.log("valuePoint0_X : " + valuePoint0_X)
+
+
+            /* edit by KH -- should be removed
             textPoint0_X.text = valuePoint0_X = Math.round(map.roi_point0_x)
             textPoint1_X.text = valuePoint1_X = Math.round(map.roi_point1_x)
             textPoint2_X.text = valuePoint2_X = Math.round(map.roi_point2_x)
@@ -79,6 +93,7 @@ GroupBox {
             textPoint1_Y.text = valuePoint1_Y = Math.round(map.roi_point1_y)
             textPoint2_Y.text = valuePoint2_Y = Math.round(map.roi_point2_y)
             textPoint3_Y.text = valuePoint3_Y = Math.round(map.roi_point3_y)
+            */
         }
     }
 

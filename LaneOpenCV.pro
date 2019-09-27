@@ -2,9 +2,28 @@ QT += qml quick multimedia quickcontrols2
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    filter.cpp \
+    opencvhelper.cpp
 
 RESOURCES += qml.qrc
+
+osx {
+
+INCLUDEPATH += "/usr/local/Cellar/gsl/2.5/include"
+
+CONFIG -= app_bundle
+
+LIBS += -L/usr/local/lib\
+         -L/usr/local/Cellar/opencv3/3.1.0_4/share/OpenCV/3rdparty/lib\
+         -lgsl\
+         -lcblas
+
+QT_CONFIG -= no-pkg-config
+CONFIG  += link_pkgconfig
+PKGCONFIG += opencv
+
+}
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -27,3 +46,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    filter.h \
+    opencvhelper.h \
+    rgbframehelper.h
