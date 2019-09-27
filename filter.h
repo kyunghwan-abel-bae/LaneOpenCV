@@ -88,13 +88,29 @@ private:
     bool isSteeringStabilizationChecked;
     bool isLineOnImageChecked;
 
-    int m_numLR;
-    int m_numLG;
     int m_numLB;
+    int m_numLG;
+    int m_numLR;
 
-    int m_numUR;
-    int m_numUG;
     int m_numUB;
+    int m_numUG;
+    int m_numUR;
+
+    int m_numLWB;
+    int m_numLWG;
+    int m_numLWR;
+
+    int m_numUWB;
+    int m_numUWG;
+    int m_numUWR;
+
+    int m_numLYB;
+    int m_numLYG;
+    int m_numLYR;
+
+    int m_numUYB;
+    int m_numUYG;
+    int m_numUYR;
 
     QStringList arrBGRLowerWhite;
     QStringList arrBGRUpperWhite;

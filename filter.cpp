@@ -555,7 +555,7 @@ QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
         points[2] = cv::Point((*mapPointList)["roi_point2_x"].toInt(), (*mapPointList)["roi_point2_y"].toInt());
         points[3] = cv::Point((*mapPointList)["roi_point3_x"].toInt(), (*mapPointList)["roi_point3_y"].toInt());
 
-        /*
+        /* codes to be removed -- checked by KH
         points[0] = cv::Point((width * (1 - trap_bottom_width_)) / 2, height);
         points[1] = cv::Point((width * (1 - trap_top_width_)) / 2, height - height * trap_height_);
         points[2] = cv::Point(width - (width * (1 - trap_top_width_)) / 2, height - height * trap_height_);
