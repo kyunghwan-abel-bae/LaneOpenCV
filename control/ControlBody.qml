@@ -36,6 +36,30 @@ Rectangle {
         running: true
         interval: filterTimeInterval; repeat: true
 
+        property int valueLowerWhiteB
+        property int valueLowerWhiteG
+        property int valueLowerWhiteR
+
+        property int valueUpperWhiteB
+        property int valueUpperWhiteG: 255
+        property int valueUpperWhiteR: 255
+
+        property int valueLowerYellowB: 89
+        property int valueLowerYellowG: 133
+        property int valueLowerYellowR: 133
+
+        property int valueUpperYellowB: 162
+        property int valueUpperYellowG: 255
+        property int valueUpperYellowR: 255
+
+        property var mapBGRValues
+        Component.onCompleted: {
+            /*
+            mapBGRValues = {}
+            mapBGRValues[keys[i]] !==
+            */
+        }
+
         onTriggered: {
 //            var map_bool = mapFilterBool
 //            var map_bool_keys = Object.keys(map_bool)
@@ -43,8 +67,17 @@ Rectangle {
 
             var is_log_activated = false
 
+            //if(map_bool_keys.length <= 0)
+            // return
+
             if(map_bool_keys.length > 0) {
                 console.log("map_bool_keys : " + map_bool_keys)
+
+                // bgr should be here
+
+
+                // roi should be here
+
                 outputFilter.setMapBoolForProcess(mapFilterBool)
                 mapFilterBool = {}
 

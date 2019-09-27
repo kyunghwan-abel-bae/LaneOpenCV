@@ -17,8 +17,13 @@ class Filter : public QAbstractVideoFilter
 public:
     QVideoFilterRunnable *createFilterRunnable() Q_DECL_OVERRIDE;
 
+    // checked by KH -- below function's name should be changed following google's coding style
     Q_INVOKABLE void setMapBoolForProcess(QVariantMap map);
+
     Q_INVOKABLE void setMapBGRListForProcess(QVariantMap map);
+
+    //// void Filter::SetBGRMaskValues
+    Q_INVOKABLE void SetBGRMaskValues(QVariantMap map);
 
     Q_INVOKABLE void set_map_points_values(QVariantMap map);
     Q_INVOKABLE QVariantMap map_points_values();
@@ -96,6 +101,7 @@ private:
     int m_numUG;
     int m_numUR;
 
+    /* edit by KH -- I don't think this is necessary
     int m_numLWB;
     int m_numLWG;
     int m_numLWR;
@@ -111,6 +117,7 @@ private:
     int m_numUYB;
     int m_numUYG;
     int m_numUYR;
+    */
 
     QStringList arrBGRLowerWhite;
     QStringList arrBGRUpperWhite;
@@ -119,6 +126,9 @@ private:
 
     QStringList arrBGRFirstMask;
     QStringList arrBGRSecondMask;
+
+    cv::Scalar lower_white_;
+    cv::Scalar upper_white_;
 
     friend class FilterRunnable;
 };
@@ -133,8 +143,6 @@ private:
 
     cv::Mat mat_;
 
-    cv::Scalar lower_white_;
-    cv::Scalar upper_white_;
     cv::Scalar lower_yellow_;
     cv::Scalar upper_yellow_;
     cv::Scalar lower_finder_;

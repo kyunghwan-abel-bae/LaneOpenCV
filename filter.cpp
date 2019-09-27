@@ -13,6 +13,10 @@ QVideoFilterRunnable* Filter::createFilterRunnable() {
 }
 
 void Filter::Init() {
+
+    lower_white_ = cv::Scalar(200, 200, 200);
+    upper_white_ = cv::Scalar(255, 255, 255);
+
     isHorizontalFlipChecked = false;
     isVerticalFlipChecked = false;
     isHSVChecked = false;
@@ -68,6 +72,11 @@ void Filter::setMapBoolForProcess(QVariantMap map) {
 }
 
 void Filter::setMapBGRListForProcess(QVariantMap map) {
+//    lower_white = Scalar(map.value, map.value2. map.value3)
+}
+
+// void Filter::SetBGRMaskValues
+void Filter::SetBGRMaskValues(QVariantMap map) {
 
 }
 
@@ -92,8 +101,8 @@ FilterRunnable::FilterRunnable(Filter *filter)
       max_angle_deviation_two_lines_(2),
       max_angle_deviation_one_line_(1),
       prev_steering_angle_(-1),
-      lower_white_(cv::Scalar(200, 200, 200)),
-      upper_white_(cv::Scalar(255, 255, 255)),
+//      lower_white_(cv::Scalar(200, 200, 200)),
+//      upper_white_(cv::Scalar(255, 255, 255)),
       lower_yellow_(cv::Scalar(89, 133, 133)),
       upper_yellow_(cv::Scalar(162, 255, 255)),
       lower_finder_(cv::Scalar(89, 133, 133)),
@@ -150,8 +159,10 @@ void FilterRunnable::FilterColors(cv::Mat _img_bgr, cv::Mat &img_filtered) {
         finder_image.copyTo(img_filtered);
     }
     else if(filter_->isMaskColorChecked) {
+
         //Filter white pixels
-        inRange(img_bgr, lower_white_, upper_white_, white_mask);
+        //inRange(img_bgr, filter->lower_white_, upper_white_, white_mask);
+        inRange(img_bgr, filter_->lower_white_, filter_->upper_white_, white_mask);
         bitwise_and(img_bgr, img_bgr, white_image, white_mask);
 
         // basic location

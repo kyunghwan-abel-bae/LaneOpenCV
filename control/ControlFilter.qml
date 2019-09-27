@@ -51,6 +51,14 @@ GroupBox {
     property int valueUpperYellowG: 255
     property int valueUpperYellowR: 255
 
+    property int valueLowerFinderB: 89
+    property int valueLowerFinderG: 133
+    property int valueLowerFinderR: 133
+
+    property int valueUpperFinderB: 162
+    property int valueUpperFinderG: 255
+    property int valueUpperFinderR: 255
+
     property int valuePoint0_X
     property int valuePoint0_Y
     property int valuePoint1_X
@@ -943,7 +951,7 @@ GroupBox {
 
                                 name: qsTr("B")
 
-                                value: valueLowerYellowB
+                                value: valueLowerFinderB
 
                                 onValueHexChanged: rectFirstMaskColor.set_color()
                             }
@@ -956,7 +964,7 @@ GroupBox {
 
                                 name: qsTr("G")
 
-                                value: valueLowerYellowG
+                                value: valueLowerFinderG
 
                                 onValueHexChanged: rectFirstMaskColor.set_color()
                             }
@@ -969,7 +977,7 @@ GroupBox {
 
                                 name: qsTr("R")
 
-                                value: valueLowerYellowR
+                                value: valueLowerFinderR
 
                                 onValueHexChanged: rectFirstMaskColor.set_color()
                             }
@@ -1038,7 +1046,7 @@ GroupBox {
 
                                 name: qsTr("B")
 
-                                value: valueUpperYellowB
+                                value: valueUpperFinderB
 
                                 onValueHexChanged: rectSecondMaskColor.set_color()
                             }
@@ -1051,7 +1059,7 @@ GroupBox {
 
                                 name: qsTr("G")
 
-                                value: valueUpperYellowG
+                                value: valueUpperFinderG
 
                                 onValueHexChanged: rectSecondMaskColor.set_color()
                             }
@@ -1064,7 +1072,7 @@ GroupBox {
 
                                 name: qsTr("R")
 
-                                value: valueUpperYellowR
+                                value: valueUpperFinderR
 
                                 onValueHexChanged: rectSecondMaskColor.set_color()
                             }
