@@ -14,6 +14,7 @@ Rectangle {
     color: "#ccc"
 
     property bool isRecordingON: true
+    property alias startOn: switchStart.checked
 
     property int filterTimeInterval: 3000
 
@@ -41,51 +42,105 @@ Rectangle {
         property int valueLowerWhiteR
 
         property int valueUpperWhiteB
-        property int valueUpperWhiteG: 255
-        property int valueUpperWhiteR: 255
+        property int valueUpperWhiteG
+        property int valueUpperWhiteR
 
-        property int valueLowerYellowB: 89
-        property int valueLowerYellowG: 133
-        property int valueLowerYellowR: 133
+        property int valueLowerYellowB
+        property int valueLowerYellowG
+        property int valueLowerYellowR
 
-        property int valueUpperYellowB: 162
-        property int valueUpperYellowG: 255
-        property int valueUpperYellowR: 255
+        property int valueUpperYellowB
+        property int valueUpperYellowG
+        property int valueUpperYellowR
 
-        property var mapBGRValues
+        property var arrMaskValues : [
+            valueLowerWhiteB, valueLowerWhiteG, valueLowerWhiteR,
+            valueUpperWhiteB, valueUpperWhiteG, valueUpperWhiteR,
+            valueLowerYellowB, valueLowerYellowG, valueLowerYellowR,
+            valueUpperYellowB, valueUpperYellowG, valueUpperYellowR,
+        ]
+
         Component.onCompleted: {
             /*
-            mapBGRValues = {}
-            mapBGRValues[keys[i]] !==
+            for(var i=0;i<arrMaskValues.length;i++)
+                arrMaskValues[i] = controlFilter.arrMaskValues[i]
             */
         }
 
+        function check_mask_colors_changed() {
+            var is_changed = false
+
+            for(var i=0;i<arrMaskValues.length;i++) {
+                console.log("arrMaskValues[i] : " + arrMaskValues[i] + ", cont.arr[i] : " + controlFilter.arrMaskValues[i])
+                if(arrMaskValues[i] !== controlFilter.arrMaskValues[i]) {
+                    arrMaskValues[i] = controlFilter.arrMaskValues[i]
+                    is_changed = true
+                }
+            }
+
+            return is_changed
+        }
+
         onTriggered: {
-//            var map_bool = mapFilterBool
-//            var map_bool_keys = Object.keys(map_bool)
-            var map_bool_keys = Object.keys(mapFilterBool)
+            var map_bool = mapFilterBool
+            var map_bool_keys = Object.keys(map_bool)
 
             var is_log_activated = false
 
-            //if(map_bool_keys.length <= 0)
-            // return
+            if(controlFilter.isMaskColorChecked) {
+//            if(controlFilter.isMaskColorChecked
+//                    && check_mask_colors_changed()) {
+                console.log("valueLowerWhiteR : " + controlFilter.valueLowerWhiteR)
+                console.log("valueUpperWhiteR : " + controlFilter.valueUpperWhiteR)
+
+                /*
+                outputFilter.numLWB = controlFilter.valueLowerWhiteB
+                outputFilter.numLWG = controlFilter.valueLowerWhiteG
+                outputFilter.numLWR = controlFilter.valueLowerWhiteR
+
+                outputFilter.numUWB = controlFilter.valueUpperWhiteB
+                outputFilter.numUWG = controlFilter.valueUpperWhiteG
+                outputFilter.numUWR = controlFilter.valueUpperWhiteR
+                */
+
+//                var map_mask_values = {}
+
+//                map_mask_values.valueLowerWhiteB = controlFilter.valueLowerWhiteB
+//                map_mask_values.valueLowerWhiteG = controlFilter.valueLowerWhiteG
+//                map_mask_values.valueLowerWhiteR = controlFilter.valueLowerWhiteR
+
+//                map_mask_values.valueUpperWhiteB = controlFilter.valueUpperWhiteB
+//                map_mask_values.valueUpperWhiteG = controlFilter.valueUpperWhiteG
+//                map_mask_values.valueUpperWhiteR = controlFilter.valueUpperWhiteR
+
+//                map_mask_values.valueLowerYellowB = controlFilter.valueLowerYellowB
+//                map_mask_values.valueLowerYellowG = controlFilter.valueLowerYellowG
+//                map_mask_values.valueLowerYellowR = controlFilter.valueLowerYellowR
+
+//                map_mask_values.valueUpperYellowB = controlFilter.valueUpperYellowB
+//                map_mask_values.valueUpperYellowG = controlFilter.valueUpperYellowG
+//                map_mask_values.valueUpperYellowR = controlFilter.valueUpperYellowR
+
+//                outputFilter.SetBGRMaskValues(map_mask_values)
+            }
+
 
             if(map_bool_keys.length > 0) {
                 console.log("map_bool_keys : " + map_bool_keys)
 
-                // bgr should be here
+
 
 
                 // roi should be here
 
-                outputFilter.setMapBoolForProcess(mapFilterBool)
+                outputFilter.setMapBoolForProcess(map_bool)
                 mapFilterBool = {}
 
                 is_log_activated = true
             }
 
             // roi
-            if(controlFilter.isROIChecke) {
+            if(controlFilter.isROIChecked) {
                 var map_roi_points = {}
 
                 map_roi_points.roi_point0_x = controlFilter.valuePoint0_X
@@ -143,12 +198,14 @@ Rectangle {
                 console.log("map_roi_points : " + JSON.stringify(map_roi_points))
             }
 
-//            console.log("hello")
+            //            console.log("hello")
             var str_value_text = controlLog.valueText
             str_value_text += "hello22"
             controlLog.valueText = str_value_text
 
-            */
+                    */
+
+
             /*
             if(map_bool_keys.length > 0) {
                 filter.setMapBoolForProcess(map_bool)
@@ -344,3 +401,4 @@ Rectangle {
         }
     }
 }
+

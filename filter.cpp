@@ -9,14 +9,11 @@
 
 QVideoFilterRunnable* Filter::createFilterRunnable() {
     Init();
+//    return new FilterRunnable(this);
     return new FilterRunnable(this);
 }
 
 void Filter::Init() {
-
-    lower_white_ = cv::Scalar(200, 200, 200);
-    upper_white_ = cv::Scalar(255, 255, 255);
-
     isHorizontalFlipChecked = false;
     isVerticalFlipChecked = false;
     isHSVChecked = false;
@@ -46,6 +43,7 @@ void Filter::Init() {
     map_filters_checked_status_["isSteeringChecked"] = &isSteeringChecked;
     map_filters_checked_status_["isSteeringStabilizationChecked"] = &isSteeringStabilizationChecked;
     map_filters_checked_status_["isLineOnImageChecked"] = &isLineOnImageChecked;
+
 }
 
 void Filter::setMapBoolForProcess(QVariantMap map) {
@@ -77,6 +75,26 @@ void Filter::setMapBGRListForProcess(QVariantMap map) {
 
 // void Filter::SetBGRMaskValues
 void Filter::SetBGRMaskValues(QVariantMap map) {
+//    qDebug() << "map : " << map.value("valueLowerWhiteB").toInt();
+//    QVariant a;
+//    a.toInt()
+
+//    lower_white_ = cv::Scalar(200, 200, 200);
+    /*
+    lower_white_ = cv::Scalar(
+                map.value("valueLowerWhiteB").toInt(),
+                map.value("valueLowerWhiteG").toInt(),
+                map.value("valueLowerWhiteR").toInt()
+                );
+                */
+
+    /*
+    upper_white_ = cv::Scalar(
+                map.value("valueUpperWhiteB").toInt(),
+                map.value("valueUpperWhiteG").toInt(),
+                map.value("valueUpperWhiteR").toInt()
+                );
+                */
 
 }
 
@@ -101,6 +119,8 @@ FilterRunnable::FilterRunnable(Filter *filter)
       max_angle_deviation_two_lines_(2),
       max_angle_deviation_one_line_(1),
       prev_steering_angle_(-1),
+      lower_white_(cv::Scalar(255, 255, 255)),
+      upper_white_(cv::Scalar(255, 255, 255)),
 //      lower_white_(cv::Scalar(200, 200, 200)),
 //      upper_white_(cv::Scalar(255, 255, 255)),
       lower_yellow_(cv::Scalar(89, 133, 133)),
@@ -160,9 +180,21 @@ void FilterRunnable::FilterColors(cv::Mat _img_bgr, cv::Mat &img_filtered) {
     }
     else if(filter_->isMaskColorChecked) {
 
+        qDebug() << "filter->m_numLWR : " << filter_->m_numLWR;
+        qDebug() << "filter->m_numUWR : " << filter_->m_numUWR;
+
+        lower_white_ = cv::Scalar(filter_->m_numLWB, filter_->m_numLWG, filter_->m_numLWR);
+        upper_white_ = cv::Scalar(filter_->m_numUWB, filter_->m_numUWG, filter_->m_numUWR);
+
+//        lower_white_ = cv::Scalar(200, 200, 200);
+//        upper_white_ = cv::Scalar(255, 255, 255);
+
+        qDebug() << "lower_white_ : " << lower_white_.val[2];
+        qDebug() << "upper_white_ : " << upper_white_.val[2];
+
         //Filter white pixels
         //inRange(img_bgr, filter->lower_white_, upper_white_, white_mask);
-        inRange(img_bgr, filter_->lower_white_, filter_->upper_white_, white_mask);
+        inRange(img_bgr, lower_white_, upper_white_, white_mask);
         bitwise_and(img_bgr, img_bgr, white_image, white_mask);
 
         // basic location
@@ -464,6 +496,9 @@ QVideoFrame FilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat &s
     last_checked_filter_ = filter_->isSteeringChecked ? k_FILTER_STEERING : last_checked_filter_;
     last_checked_filter_ = filter_->isSteeringStabilizationChecked ? k_FILTER_STEERING_STABILIZATION : last_checked_filter_;
     last_checked_filter_ = filter_->isLineOnImageChecked ? k_FILTER_LINE_ON_IMAGE : last_checked_filter_;
+
+//    qDebug() << "lower_white : " << filter_->lower_white_.val[0];//lower_yellow_.val[0];
+//    qDebug() << "lower_yellow : " << lower_yellow_.val[0];
 
     cv::Mat img_bgr, img_filtered, img_gray, img_edges, img_annotated, img_return, img_empty, img_line;
     QVariantMap *mapPointList = &(filter_->map_points_values_);

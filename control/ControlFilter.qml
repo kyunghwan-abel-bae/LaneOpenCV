@@ -68,6 +68,12 @@ GroupBox {
     property int valuePoint3_X
     property int valuePoint3_Y
 
+    property var arrMaskValues : [
+                                    valueLowerWhiteB, valueLowerWhiteG, valueLowerWhiteR,
+                                    valueUpperWhiteB, valueUpperWhiteG, valueUpperWhiteR,
+                                    valueLowerYellowB, valueLowerYellowG, valueLowerYellowR,
+                                    valueUpperYellowB, valueUpperYellowG, valueUpperYellowR,
+                                 ]
     property var targetFilter
 
     onIsMaskColorCheckedChanged: {
@@ -264,9 +270,9 @@ GroupBox {
 
                             labelValue: qsTr("Lower White (B,G,R)")
 
-                            onValueBChanged: valueLowerWhiteB = valueB
-                            onValueGChanged: valueLowerWhiteG = valueG
-                            onValueRChanged: valueLowerWhiteR = valueR
+                            onValueBChanged: targetFilter.numLWB = valueLowerWhiteB = valueB
+                            onValueGChanged: targetFilter.numLWG = valueLowerWhiteG = valueG
+                            onValueRChanged: targetFilter.numLWR = valueLowerWhiteR = valueR
                         }
 
                         ControlBGRTextField {
@@ -283,9 +289,9 @@ GroupBox {
 
                             labelValue: qsTr("Upper White (B,G,R)")
 
-                            onValueBChanged: valueUpperWhiteB = valueB
-                            onValueGChanged: valueUpperWhiteG = valueG
-                            onValueRChanged: valueUpperWhiteR = valueR
+                            onValueBChanged: targetFilter.numUWB = valueUpperWhiteB = valueB
+                            onValueGChanged: targetFilter.numUWG = valueUpperWhiteG = valueG
+                            onValueRChanged: targetFilter.numUWR = valueUpperWhiteR = valueR
                         }
 
                         ControlBGRTextField {

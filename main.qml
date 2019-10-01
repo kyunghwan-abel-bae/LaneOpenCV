@@ -42,10 +42,13 @@ ApplicationWindow {
         height: parent.height
 
         videoSource: defaultVideoSource
-        outputFilters: LaneFilter {
-            id: laneFilter
-        }
+        outputFilters:  controlBody.startOn ? laneFilter : []
     }
+
+    LaneFilter {
+        id: laneFilter
+    }
+
 
     ControlBody {
         id: controlBody

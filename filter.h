@@ -7,6 +7,8 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 
+#include <QMutex>
+
 #include <gsl/gsl_fit.h>
 
 using namespace std;
@@ -18,6 +20,7 @@ public:
     QVideoFilterRunnable *createFilterRunnable() Q_DECL_OVERRIDE;
 
     // checked by KH -- below function's name should be changed following google's coding style
+    // set_map_filters_checked_status_(~~~)
     Q_INVOKABLE void setMapBoolForProcess(QVariantMap map);
 
     Q_INVOKABLE void setMapBGRListForProcess(QVariantMap map);
@@ -47,9 +50,34 @@ public:
                 READ numUG
                 WRITE set_numUG)
 
-     Q_PROPERTY (int numUB
+    Q_PROPERTY (int numUB
                 READ numUB
                 WRITE set_numUB)
+
+    Q_PROPERTY (int numLWB
+                READ numLWB
+                WRITE set_numLWB)
+
+    Q_PROPERTY (int numLWG
+                READ numLWG
+                WRITE set_numLWG)
+
+    Q_PROPERTY (int numLWR
+                READ numLWR
+                WRITE set_numLWR)
+
+    Q_PROPERTY (int numUWB
+                READ numUWB
+                WRITE set_numUWB)
+
+    Q_PROPERTY (int numUWG
+                READ numUWG
+                WRITE set_numUWG)
+
+     Q_PROPERTY (int numUWR
+                READ numUWR
+                WRITE set_numUWR)
+
 
     int numLR() { return m_numLR; }
     int numLG() { return m_numLG; }
@@ -59,6 +87,14 @@ public:
     int numUG() { return m_numUG; }
     int numUB() { return m_numUB; }
 
+    int numLWB() { return m_numLWB; }
+    int numLWG() { return m_numLWG; }
+    int numLWR() { return m_numLWR; }
+
+    int numUWB() { return m_numUWB; }
+    int numUWG() { return m_numUWG; }
+    int numUWR() { return m_numUWR; }
+
     void set_numLR(const int& numLR) { m_numLR = numLR; }
     void set_numLG(const int& numLG) { m_numLG = numLG; }
     void set_numLB(const int& numLB) { m_numLB = numLB; }
@@ -67,11 +103,21 @@ public:
     void set_numUG(const int& numUG) { m_numUG = numUG; }
     void set_numUB(const int& numUB) { m_numUB = numUB; }
 
+    void set_numLWB(const int& numLWB) { m_numLWB = numLWB; }
+    void set_numLWG(const int& numLWG) { m_numLWG = numLWG; }
+    void set_numLWR(const int& numLWR) { m_numLWR = numLWR; }
+
+    void set_numUWB(const int& numUWB) { m_numUWB = numUWB; }
+    void set_numUWG(const int& numUWG) { m_numUWG = numUWG; }
+    void set_numUWR(const int& numUWR) { m_numUWR = numUWR; }
+
 signals:
     void finished(QObject *e);
 
 private:
     void Init();
+
+    QMutex mutex;
 
     // qml interface values
     map<QString, bool*> map_filters_checked_status_;
@@ -101,7 +147,6 @@ private:
     int m_numUG;
     int m_numUR;
 
-    /* edit by KH -- I don't think this is necessary
     int m_numLWB;
     int m_numLWG;
     int m_numLWR;
@@ -117,7 +162,6 @@ private:
     int m_numUYB;
     int m_numUYG;
     int m_numUYR;
-    */
 
     QStringList arrBGRLowerWhite;
     QStringList arrBGRUpperWhite;
@@ -127,22 +171,24 @@ private:
     QStringList arrBGRFirstMask;
     QStringList arrBGRSecondMask;
 
-    cv::Scalar lower_white_;
-    cv::Scalar upper_white_;
-
     friend class FilterRunnable;
 };
 
 class FilterRunnable : public QVideoFilterRunnable {
 public:
     FilterRunnable(Filter *filter);
+//    FilterRunnable(Filter *filter, QMutex *mutex);
     QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, RunFlags flags) Q_DECL_OVERRIDE;
 
 private:
     Filter *filter_;
 
+    QMutex *mutex;
+
     cv::Mat mat_;
 
+    cv::Scalar lower_white_;
+    cv::Scalar upper_white_;
     cv::Scalar lower_yellow_;
     cv::Scalar upper_yellow_;
     cv::Scalar lower_finder_;
