@@ -12,6 +12,8 @@ Item {
     readonly property int k_radioCameraChecked: 1
     readonly property int k_radioVideoChecked: 2
 
+    property alias videoFileName: radioVideo.strSelectedVideoName
+
     property int statusChecked: -1
 
     property string videoSource

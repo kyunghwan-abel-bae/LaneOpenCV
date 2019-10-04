@@ -59,29 +59,57 @@ GroupBox {
     property int valueUpperFinderG: 255
     property int valueUpperFinderR: 255
 
-    property int valuePoint0_X
-    property int valuePoint0_Y
-    property int valuePoint1_X
-    property int valuePoint1_Y
-    property int valuePoint2_X
-    property int valuePoint2_Y
-    property int valuePoint3_X
-    property int valuePoint3_Y
+    property int valuePoint0_X: -1
+    property int valuePoint0_Y: -1
+    property int valuePoint1_X: -1
+    property int valuePoint1_Y: -1
+    property int valuePoint2_X: -1
+    property int valuePoint2_Y: -1
+    property int valuePoint3_X: -1
+    property int valuePoint3_Y: -1
 
     property var arrMaskValues : [
-                                    valueLowerWhiteB, valueLowerWhiteG, valueLowerWhiteR,
-                                    valueUpperWhiteB, valueUpperWhiteG, valueUpperWhiteR,
-                                    valueLowerYellowB, valueLowerYellowG, valueLowerYellowR,
-                                    valueUpperYellowB, valueUpperYellowG, valueUpperYellowR,
-                                 ]
+        valueLowerWhiteB, valueLowerWhiteG, valueLowerWhiteR,
+        valueUpperWhiteB, valueUpperWhiteG, valueUpperWhiteR,
+        valueLowerYellowB, valueLowerYellowG, valueLowerYellowR,
+        valueUpperYellowB, valueUpperYellowG, valueUpperYellowR,
+    ]
     property var targetFilter
+
+    Component.onCompleted: {
+        var map = targetFilter.map_points_values();
+
+        valuePoint0_X = Math.round(map.roi_point0_x)
+        valuePoint1_X = Math.round(map.roi_point1_x)
+        valuePoint2_X = Math.round(map.roi_point2_x)
+        valuePoint3_X = Math.round(map.roi_point3_x)
+
+        valuePoint0_Y = Math.round(map.roi_point0_y)
+        valuePoint1_Y = Math.round(map.roi_point1_y)
+        valuePoint2_Y = Math.round(map.roi_point2_y)
+        valuePoint3_Y = Math.round(map.roi_point3_y)
+
+        console.log("valuePoint0_X : " + valuePoint0_X)
+        console.log("valuePoint1_X : " + valuePoint1_X)
+        console.log("valuePoint2_X : " + valuePoint2_X)
+        console.log("valuePoint3_X : " + valuePoint3_X)
+    }
 
     onIsMaskColorCheckedChanged: {
         isHSVChecked = true
     }
 
     onIsROICheckedChanged: {
-        if(isROIChecked) {
+//        if(false) {
+
+//        if(isROIChecked) {
+        // checked by KH -- condition should be updated
+        if((valuePoint0_X + valuePoint0_Y
+                + valuePoint1_X + valuePoint1_Y
+                + valuePoint2_X + valuePoint2_Y
+                + valuePoint3_X + valuePoint3_Y) < 0) {
+
+            console.log("initttt")
             var map = targetFilter.map_points_values();
 
             valuePoint0_X = Math.round(map.roi_point0_x)
@@ -94,8 +122,21 @@ GroupBox {
             valuePoint2_Y = Math.round(map.roi_point2_y)
             valuePoint3_Y = Math.round(map.roi_point3_y)
 
-            console.log("valuePoint0_X : " + valuePoint0_X)
+                        /*
+            console.log("map : " + JSON.stringify(map))
 
+            textFieldPoint0.valueX = valuePoint0_X = Math.round(map.roi_point0_x)
+            textFieldPoint1.valueX = valuePoint1_X = Math.round(map.roi_point1_x)
+            textFieldPoint2.valueX = valuePoint2_X = Math.round(map.roi_point2_x)
+            textFieldPoint3.valueX = valuePoint3_X = Math.round(map.roi_point3_x)
+
+            textFieldPoint0.valueY = valuePoint0_Y = Math.round(map.roi_point0_y)
+            textFieldPoint1.valueY = valuePoint1_Y = Math.round(map.roi_point1_y)
+            textFieldPoint2.valueY = valuePoint2_Y = Math.round(map.roi_point2_y)
+            textFieldPoint3.valueY = valuePoint3_Y = Math.round(map.roi_point3_y)
+
+            console.log("valuePoint0_X : " + valuePoint0_X)
+            */
 
             /* edit by KH -- should be removed
             textPoint0_X.text = valuePoint0_X = Math.round(map.roi_point0_x)
@@ -270,9 +311,16 @@ GroupBox {
 
                             labelValue: qsTr("Lower White (B,G,R)")
 
+                            /*
                             onValueBChanged: targetFilter.numLWB = valueLowerWhiteB = valueB
                             onValueGChanged: targetFilter.numLWG = valueLowerWhiteG = valueG
                             onValueRChanged: targetFilter.numLWR = valueLowerWhiteR = valueR
+                            */
+
+                            onValueBChanged: valueLowerWhiteB = valueB
+                            onValueGChanged: valueLowerWhiteG = valueG
+                            onValueRChanged: valueLowerWhiteR = valueR
+
                         }
 
                         ControlBGRTextField {
@@ -289,9 +337,15 @@ GroupBox {
 
                             labelValue: qsTr("Upper White (B,G,R)")
 
+                            /*
                             onValueBChanged: targetFilter.numUWB = valueUpperWhiteB = valueB
                             onValueGChanged: targetFilter.numUWG = valueUpperWhiteG = valueG
                             onValueRChanged: targetFilter.numUWR = valueUpperWhiteR = valueR
+                            */
+
+                            onValueBChanged: valueUpperWhiteB = valueB
+                            onValueGChanged: valueUpperWhiteG = valueG
+                            onValueRChanged: valueUpperWhiteR = valueR
                         }
 
                         ControlBGRTextField {
@@ -331,8 +385,8 @@ GroupBox {
                             onValueGChanged: valueUpperYellowG = valueG
                             onValueRChanged: valueUpperYellowR = valueR
                         }
-// added by KH - I think this should be gone.
-/*
+                        // added by KH - I think this should be gone.
+                        /*
                         Row {
                             width: parent.width
                             height: checkMaskColor.height
@@ -1229,510 +1283,6 @@ GroupBox {
                     onValueXChanged: valuePoint3_X = valueX
                     onValueYChanged: valuePoint3_Y = valueY
                 }
-
-                // added by KH
-
-/*
-                Row {
-                    width: parent.width
-                    height: checkROI.height
-
-                    spacing: height * 0.1
-
-                    Label {
-                        width: parent.width * 0.35
-                        height: parent.height
-
-                        text: qsTr("Point0(x,y) ")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr("(")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint0_X
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint0_X
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(",")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint0_Y
-
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint0_Y
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(")")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-
-                Row {
-                    width: parent.width
-                    height: checkROI.height
-
-                    spacing: height * 0.1
-
-                    Label {
-                        width: parent.width * 0.35
-                        height: parent.height
-
-                        text: qsTr("Point1(x,y) ")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr("(")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint1_X
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint1_X
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(",")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint1_Y
-
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint1_Y
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(")")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-
-                Row {
-                    width: parent.width
-                    height: checkROI.height
-
-                    spacing: height * 0.1
-
-                    Label {
-                        width: parent.width * 0.35
-                        height: parent.height
-
-                        text: qsTr("Point2(x,y) ")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr("(")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint2_X
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint2_X
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(",")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint2_Y
-
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint2_Y
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(")")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-
-                Row {
-                    width: parent.width
-                    height: checkROI.height
-
-                    spacing: height * 0.1
-
-                    Label {
-                        width: parent.width * 0.35
-                        height: parent.height
-
-                        text: qsTr("Point3(x,y) ")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr("(")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint3_X
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint3_X
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(",")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    TextField {
-                        id: textPoint3_Y
-
-                        width: parent.width * 0.25
-                        height: parent.height
-
-                        font.pixelSize: checkROI.font.pixelSize
-                        validator: IntValidator { bottom: 0; top: 9999 }
-
-                        leftPadding: width * 0.2
-                        horizontalAlignment: Text.AlignHCenter
-
-                        property alias targetValue: root.valuePoint3_Y
-
-                        Component.onCompleted: text = targetValue
-
-                        Keys.onPressed: {
-                            // enter pressed
-                            if(event.key === 16777220) {
-                                targetValue = text * 1
-
-                                focus = false
-                            }
-                            // esc pressed
-                            else if(event.key === 16777216) {
-                                focus = false
-                            }
-                        }
-
-                        onFocusChanged: {
-                            if(!focus) {
-                                text = targetValue
-                            }
-                            else {
-                                selectAll()
-                            }
-                        }
-                    }
-
-                    Label {
-                        height: parent.height
-
-                        text: qsTr(")")
-
-                        font.pixelSize: checkROI.font.pixelSize
-
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-*/
             }
         }
 

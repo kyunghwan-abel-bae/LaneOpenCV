@@ -103,33 +103,32 @@ Rectangle {
                 outputFilter.numUWR = controlFilter.valueUpperWhiteR
                 */
 
-//                var map_mask_values = {}
+                var map_mask_values = {}
 
-//                map_mask_values.valueLowerWhiteB = controlFilter.valueLowerWhiteB
-//                map_mask_values.valueLowerWhiteG = controlFilter.valueLowerWhiteG
-//                map_mask_values.valueLowerWhiteR = controlFilter.valueLowerWhiteR
+                map_mask_values.valueLowerWhiteB = controlFilter.valueLowerWhiteB
+                map_mask_values.valueLowerWhiteG = controlFilter.valueLowerWhiteG
+                map_mask_values.valueLowerWhiteR = controlFilter.valueLowerWhiteR
 
-//                map_mask_values.valueUpperWhiteB = controlFilter.valueUpperWhiteB
-//                map_mask_values.valueUpperWhiteG = controlFilter.valueUpperWhiteG
-//                map_mask_values.valueUpperWhiteR = controlFilter.valueUpperWhiteR
+                map_mask_values.valueUpperWhiteB = controlFilter.valueUpperWhiteB
+                map_mask_values.valueUpperWhiteG = controlFilter.valueUpperWhiteG
+                map_mask_values.valueUpperWhiteR = controlFilter.valueUpperWhiteR
 
-//                map_mask_values.valueLowerYellowB = controlFilter.valueLowerYellowB
-//                map_mask_values.valueLowerYellowG = controlFilter.valueLowerYellowG
-//                map_mask_values.valueLowerYellowR = controlFilter.valueLowerYellowR
+                /*
+                map_mask_values.valueLowerYellowB = controlFilter.valueLowerYellowB
+                map_mask_values.valueLowerYellowG = controlFilter.valueLowerYellowG
+                map_mask_values.valueLowerYellowR = controlFilter.valueLowerYellowR
 
-//                map_mask_values.valueUpperYellowB = controlFilter.valueUpperYellowB
-//                map_mask_values.valueUpperYellowG = controlFilter.valueUpperYellowG
-//                map_mask_values.valueUpperYellowR = controlFilter.valueUpperYellowR
+                map_mask_values.valueUpperYellowB = controlFilter.valueUpperYellowB
+                map_mask_values.valueUpperYellowG = controlFilter.valueUpperYellowG
+                map_mask_values.valueUpperYellowR = controlFilter.valueUpperYellowR
+                */
 
-//                outputFilter.SetBGRMaskValues(map_mask_values)
+                outputFilter.SetBGRMaskValues(map_mask_values)
             }
 
 
             if(map_bool_keys.length > 0) {
                 console.log("map_bool_keys : " + map_bool_keys)
-
-
-
 
                 // roi should be here
 
@@ -167,6 +166,86 @@ Rectangle {
                 is_log_activated = true
             }
 
+            /*
+            //            console.log("hello")
+            var str_value_text = controlLog.valueText
+            str_value_text += "hello22"
+            controlLog.valueText = str_value_text
+
+                    */
+
+            if(isRecordingON && is_log_activated) {
+                var text = "=========================="
+                text += "<br>"
+                text +=  ("<B>Video File</B> : " + controlOutputTypes.videoFileName)
+                text += "<br>"
+                text += "---------------------------------------<br>"
+                text +=  "<B>Filter</B>"
+                text += "<p>"
+                text += "Mask is checked : " + controlFilter.isMaskChecked
+                text += "<br>"
+                text += "&nbsp;&nbsp;"
+                text += "HSV is checked : " + controlFilter.isHSVChecked
+                text += "<br>"
+                text += "&nbsp;&nbsp;"
+                text += "Mask Color is checked : " + controlFilter.isMaskColorChecked
+                text += "<br>"
+                if(controlFilter.isMaskColorChecked) {
+                    text += "&nbsp;&nbsp;"
+                    text += "- Lower White(B,G,R) : (" + controlFilter.valueLowerWhiteB + "," + controlFilter.valueLowerWhiteG + "," + controlFilter.valueLowerWhiteR + ")"
+                    text += "<br>"
+                    text += "&nbsp;&nbsp;"
+                    text += "- Upper White(B,G,R) : (" + controlFilter.valueUpperWhiteB + "," + controlFilter.valueUpperWhiteG + "," + controlFilter.valueUpperWhiteR + ")"
+                    text += "<br>"
+                    text += "&nbsp;&nbsp;"
+                    text += "- Lower Yellow(B,G,R) : (" + controlFilter.valueLowerYellowB + "," + controlFilter.valueLowerYellowG + "," + controlFilter.valueLowerYellowR + ")"
+                    text += "<br>"
+                    text += "&nbsp;&nbsp;"
+                    text += "- Upper Yellow(B,G,R) : (" + controlFilter.valueUpperYellowB + "," + controlFilter.valueUpperYellowG + "," + controlFilter.valueUpperYellowR + ")"
+                    text += "<br>"
+                }
+                text += "&nbsp;&nbsp;"
+                text += "Mask Color Finder is checked : " + controlFilter.isMaskColorFinderChecked
+                text += "<br>"
+                if(controlFilter.isMaskColorFinderChecked) {
+                    text += "&nbsp;&nbsp;"
+                    text += "- First Mask(B,G,R) : (" + controlFilter.valueLowerYellowB + "," + controlFilter.valueLowerYellowG + "," + controlFilter.valueLowerYellowR + ")"
+                    text += "<br>"
+                    text += "&nbsp;&nbsp;"
+                    text += "- Second Mask(B,G,R) : (" + controlFilter.valueUpperYellowB + "," + controlFilter.valueUpperYellowG + "," + controlFilter.valueUpperYellowR + ")"
+                    text += "<br>"
+                }
+                text += "Gray is checked : " + controlFilter.isGrayChecked
+                text += "<br>"
+                text += "Gaussian is checked : " + controlFilter.isGaussianChecked
+                text += "<br>"
+                text += "Canny is checked : " + controlFilter.isCannyChecked
+                text += "<br>"
+                text += "ROI is checked : " + controlFilter.isROIChecked
+                text += "<br>"
+                if(controlFilter.isROIChecked) {
+                    text += "- Point0(x,y) : (" + controlFilter.valuePoint0_X + "," + controlFilter.valuePoint0_Y + ")"
+                    text += "<br>"
+                    text += "- Point1(x,y) : (" + controlFilter.valuePoint1_X + "," + controlFilter.valuePoint1_Y + ")"
+                    text += "<br>"
+                    text += "- Point2(x,y) : (" + controlFilter.valuePoint2_X + "," + controlFilter.valuePoint2_Y + ")"
+                    text += "<br>"
+                    text += "- Point3(x,y) : (" + controlFilter.valuePoint3_X + "," + controlFilter.valuePoint3_Y + ")"
+                    text += "<br>"
+                }
+                text += "Line Only is checked : " + controlFilter.isLineOnlyChecked
+                text += "<br>"
+                text += "Steering is checked : " + controlFilter.isSteeringChecked
+                text += "<br>"
+                text += "Steering Stabilization is checked : " + controlFilter.isSteeringStabilizationChecked
+                text += "<br>"
+                text += "Line On Image is checked : " + controlFilter.isLineOnImageChecked
+                text += "<br>"
+                text += "Final is checked : " + controlFilter.isFinalChecked
+                text += "<br>"
+
+                controlLog.valueText += text
+            }
 
 
 
@@ -198,12 +277,7 @@ Rectangle {
                 console.log("map_roi_points : " + JSON.stringify(map_roi_points))
             }
 
-            //            console.log("hello")
-            var str_value_text = controlLog.valueText
-            str_value_text += "hello22"
-            controlLog.valueText = str_value_text
 
-                    */
 
 
             /*

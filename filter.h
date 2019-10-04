@@ -1,6 +1,13 @@
 #ifndef FILTER_H
 #define FILTER_H
 
+
+
+
+
+
+
+/*
 #include <QAbstractVideoFilter>
 
 #include <opencv2/core/core.hpp>
@@ -117,7 +124,10 @@ signals:
 private:
     void Init();
 
-    QMutex mutex;
+    QMutex mutex_;
+
+    cv::Scalar lower_white_;
+    cv::Scalar upper_white_;
 
     // qml interface values
     map<QString, bool*> map_filters_checked_status_;
@@ -176,19 +186,17 @@ private:
 
 class FilterRunnable : public QVideoFilterRunnable {
 public:
-    FilterRunnable(Filter *filter);
-//    FilterRunnable(Filter *filter, QMutex *mutex);
+//    FilterRunnable(Filter *filter);
+    FilterRunnable(Filter *filter, QMutex *mutex);
     QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, RunFlags flags) Q_DECL_OVERRIDE;
 
 private:
     Filter *filter_;
 
-    QMutex *mutex;
+    QMutex *mutex_;
 
     cv::Mat mat_;
 
-    cv::Scalar lower_white_;
-    cv::Scalar upper_white_;
     cv::Scalar lower_yellow_;
     cv::Scalar upper_yellow_;
     cv::Scalar lower_finder_;
@@ -243,5 +251,5 @@ private:
     QVariantList rects_;
     friend class FilterRunnable;
 };
-
+*/
 #endif // FILTER_H
