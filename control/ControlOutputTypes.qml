@@ -9,8 +9,8 @@ Item {
     id: root
 
     readonly property int k_radioSampleChecked: 1
-    readonly property int k_radioCameraChecked: 1
-    readonly property int k_radioVideoChecked: 2
+    readonly property int k_radioCameraChecked: 2
+    readonly property int k_radioVideoChecked: 3
 
     property alias videoFileName: radioVideo.strSelectedVideoName
 

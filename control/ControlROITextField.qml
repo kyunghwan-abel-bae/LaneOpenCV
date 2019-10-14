@@ -7,8 +7,8 @@ Row {
 
     spacing: height * 0.1
 
-    property int valueX//: fieldX.text
-    property int valueY//: fieldY.text
+    property int valueX
+    property int valueY
 
     property real fontPixelSize
 
@@ -48,14 +48,9 @@ Row {
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
 
-//        property int fieldValueX
-
-//        Component.onCompleted: text = fieldValueX
-
         Keys.onPressed: {
             // enter pressed
             if(event.key === 16777220) {
-//                fieldValueX = text * 1
                 valueX = text * 1
 
                 focus = false
@@ -68,7 +63,6 @@ Row {
 
         onFocusChanged: {
             if(!focus) {
-//                text = fieldValueX
                 text = valueX
             }
             else {
@@ -101,14 +95,9 @@ Row {
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
 
-//        property int fieldValueY
-
-//        Component.onCompleted: text = fieldValueY
-
         Keys.onPressed: {
             // enter pressed
             if(event.key === 16777220) {
-//                fieldValueY = text * 1
                 valueY = text * 1
 
                 focus = false
@@ -121,7 +110,6 @@ Row {
 
         onFocusChanged: {
             if(!focus) {
-                //text = fieldValueY
                 text = valueY
             }
             else {

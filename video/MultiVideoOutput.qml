@@ -1,19 +1,6 @@
 import QtQuick 2.3
 import QtMultimedia 5.5
 
-// can play multi video types
-// support camera, media
-// support filter
-
-// video output which supports both of Media and Camera
-// arguments
-// setvideoSource
-// setVideoFilter
-// play()
-// stop()
-// cameraON
-// mediaON
-
 Item {
     id: root
 
@@ -33,7 +20,6 @@ Item {
 
     function startCamera() { outputType = k_output_type_camera }
     function startVideo() {
-        console.log("start video")
         if(videoSource !== playingVideoSource) {
             loaderOutput.item.start()
         }
@@ -79,6 +65,7 @@ Item {
             MultiVideoOutputComponentBody {
                 Component.onCompleted: {
                     // camera starts without start().
+                    start.connect(camera.start)
                     stop.connect(camera.stop)
                 }
 

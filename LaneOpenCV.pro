@@ -3,7 +3,6 @@ QT += core qml quick multimedia quickcontrols2
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    filter.cpp \
     opencvhelper.cpp \
     adas_filter.cpp
 
@@ -49,7 +48,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    filter.h \
     opencvhelper.h \
     rgbframehelper.h \
     adas_filter.h

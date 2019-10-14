@@ -13,12 +13,13 @@ Rectangle {
 
     color: "#ccc"
 
-    property bool isRecordingON: true
     property alias startOn: switchStart.checked
+    property alias outputStatusChecked: controlOutputTypes.statusChecked
+
+    property bool isRecordingON: true
 
     property int filterTimeInterval: 3000
 
-    ///... copy codes from the old one whenever component is added.
     property var outputFilter
     property var videoOutput
 
@@ -27,6 +28,15 @@ Rectangle {
     Component.onCompleted: {
         var jsMap = {}
         mapFilterBool = jsMap
+    }
+
+    onOutputStatusCheckedChanged: {
+        if(outputStatusChecked == controlOutputTypes.k_radioCameraChecked) {
+            outputFilter.set_is_camera_on(true)
+        }
+        else {
+            outputFilter.set_is_camera_on(false)
+        }
     }
 
     // added by KH for commentary
@@ -60,13 +70,6 @@ Rectangle {
             valueUpperYellowB, valueUpperYellowG, valueUpperYellowR,
         ]
 
-        Component.onCompleted: {
-            /*
-            for(var i=0;i<arrMaskValues.length;i++)
-                arrMaskValues[i] = controlFilter.arrMaskValues[i]
-            */
-        }
-
         function check_mask_colors_changed() {
             var is_changed = false
 
@@ -88,20 +91,6 @@ Rectangle {
             var is_log_activated = false
 
             if(controlFilter.isMaskColorChecked) {
-//            if(controlFilter.isMaskColorChecked
-//                    && check_mask_colors_changed()) {
-                console.log("valueLowerWhiteR : " + controlFilter.valueLowerWhiteR)
-                console.log("valueUpperWhiteR : " + controlFilter.valueUpperWhiteR)
-
-                /*
-                outputFilter.numLWB = controlFilter.valueLowerWhiteB
-                outputFilter.numLWG = controlFilter.valueLowerWhiteG
-                outputFilter.numLWR = controlFilter.valueLowerWhiteR
-
-                outputFilter.numUWB = controlFilter.valueUpperWhiteB
-                outputFilter.numUWG = controlFilter.valueUpperWhiteG
-                outputFilter.numUWR = controlFilter.valueUpperWhiteR
-                */
 
                 var map_mask_values = {}
 
@@ -113,7 +102,6 @@ Rectangle {
                 map_mask_values.valueUpperWhiteG = controlFilter.valueUpperWhiteG
                 map_mask_values.valueUpperWhiteR = controlFilter.valueUpperWhiteR
 
-                /*
                 map_mask_values.valueLowerYellowB = controlFilter.valueLowerYellowB
                 map_mask_values.valueLowerYellowG = controlFilter.valueLowerYellowG
                 map_mask_values.valueLowerYellowR = controlFilter.valueLowerYellowR
@@ -121,18 +109,16 @@ Rectangle {
                 map_mask_values.valueUpperYellowB = controlFilter.valueUpperYellowB
                 map_mask_values.valueUpperYellowG = controlFilter.valueUpperYellowG
                 map_mask_values.valueUpperYellowR = controlFilter.valueUpperYellowR
-                */
 
                 outputFilter.SetBGRMaskValues(map_mask_values)
             }
-
 
             if(map_bool_keys.length > 0) {
                 console.log("map_bool_keys : " + map_bool_keys)
 
                 // roi should be here
 
-                outputFilter.setMapBoolForProcess(map_bool)
+                outputFilter.set_map_filters_checked_status(map_bool)
                 mapFilterBool = {}
 
                 is_log_activated = true
@@ -154,25 +140,8 @@ Rectangle {
 
                 outputFilter.set_map_points_values(map_roi_points);
 
-                // test by KH -- Is it really required?
                 is_log_activated = true
             }
-
-            // Is it really required?
-            // Because of map_bool_keys,
-            // I guess that is_log_activated is already changed.
-            if(controlFilter.isMaskColorChecked
-                    || controlFilter.isMaskColorFinderChecked) {
-                is_log_activated = true
-            }
-
-            /*
-            //            console.log("hello")
-            var str_value_text = controlLog.valueText
-            str_value_text += "hello22"
-            controlLog.valueText = str_value_text
-
-                    */
 
             if(isRecordingON && is_log_activated) {
                 var text = "=========================="
@@ -246,50 +215,6 @@ Rectangle {
 
                 controlLog.valueText += text
             }
-
-
-
-            // test by KH -- should be removed
-            /*
-            if(map_bool_keys.length > 0) {
-                console.log("map_bool : " + JSON.stringify(map_bool))
-                mapFilterBool = {}
-            }
-
-            if(controlFilter.isMaskColorChecked) {
-                var text = "- Upper White(B,G,R) : (" + controlFilter.valueUpperWhiteB + "," + controlFilter.valueUpperWhiteG + "," + controlFilter.valueUpperWhiteR + ")"
-                console.log("text : " + text)
-            }
-
-            if(controlFilter.isROIChecked) {
-                var map_roi_points = {}
-
-                map_roi_points.roi_point0_x = controlFilter.valuePoint0_X
-                map_roi_points.roi_point1_x = controlFilter.valuePoint1_X
-                map_roi_points.roi_point2_x = controlFilter.valuePoint2_X
-                map_roi_points.roi_point3_x = controlFilter.valuePoint3_X
-
-                map_roi_points.roi_point0_y = controlFilter.valuePoint0_Y
-                map_roi_points.roi_point1_y = controlFilter.valuePoint1_Y
-                map_roi_points.roi_point2_y = controlFilter.valuePoint2_Y
-                map_roi_points.roi_point3_y = controlFilter.valuePoint3_Y
-
-                console.log("map_roi_points : " + JSON.stringify(map_roi_points))
-            }
-
-
-
-
-            /*
-            if(map_bool_keys.length > 0) {
-                filter.setMapBoolForProcess(map_bool)
-                mapFilterBool = {}
-
-                is_log_activated = true
-            }
-            */
-
-
         }
     }
 
@@ -349,10 +274,8 @@ Rectangle {
                 }
 
                 onSignalRadioSampleChecked: {
-                    if(videoOutput.outputType === videoOutput.k_output_type_undefined)
-                        videoOutput.startVideo()
-                    else
-                        videoSourceUpdated(defaultVideoSource)
+                    videoSource = defaultVideoSource
+                    videoOutput.startVideo()
                 }
 
                 onSignalRadioCameraChecked: videoOutput.startCamera()
