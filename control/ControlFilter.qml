@@ -21,6 +21,7 @@ GroupBox {
     property alias isGaussianChecked: checkGaussian.checked
     property alias isCannyChecked: checkCanny.checked
     property alias isROIChecked: checkROI.checked
+    property alias isROIVerticalFlipChecked: checkROIVertialFlip.checked
     property alias isLineOnlyChecked: checkLineOnly.checked
     property alias isSteeringChecked: checkSteering.checked
     property alias isSteeringStabilizationChecked: checkSteeringStabilzation.checked
@@ -606,7 +607,7 @@ GroupBox {
                 onCheckedChanged: {
                     if(checked) {
                         colROI.visible = true
-                        colROI.height = checkROI.height * 5
+                        colROI.height = checkROI.height * 7
                     }
                     else {
                         colROI.height = 0
@@ -628,6 +629,19 @@ GroupBox {
                 }
 
                 spacing: width * 0.05
+
+                CheckBox {
+                    id: checkROIVertialFlip
+
+                    width: parent.width
+                    height: checkROI.height
+
+                    font.pixelSize: checkROI.font.pixelSize
+
+                    text: "Vertical Flip for ROI"
+
+                    checked: true
+                }
 
                 ControlROITextField {
                     id: textFieldPoint0

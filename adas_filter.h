@@ -79,6 +79,7 @@ private:
     bool isGaussianChecked;
     bool isCannyChecked;
     bool isROIChecked;
+    bool isROIVerticalFlipChecked;
     bool isLineOnlyChecked;
     bool isSteeringChecked;
     bool isSteeringStabilizationChecked;

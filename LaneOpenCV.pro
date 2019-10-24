@@ -8,6 +8,24 @@ SOURCES += main.cpp \
 
 RESOURCES += qml.qrc
 
+linux:!android {
+
+INCLUDEPATH += /usr/local/include
+
+LIBS += -L/home/abel/gsl_arm/lib \
+        -L/home/abel/Desktop/cmake_opencv_lib/lib \
+        -L/usr/local/lib \
+         -lopencv_imgcodecs \
+         -lopencv_core \
+         -lopencv_imgproc \
+         -lopencv_video \
+         -lgsl \
+         -lgslcblas \
+}
+
+android {
+}
+
 osx {
 
 INCLUDEPATH += "/usr/local/Cellar/gsl/2.5/include"

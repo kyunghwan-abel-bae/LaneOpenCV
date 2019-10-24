@@ -26,6 +26,7 @@ void ADASFilter::Init() {
     isSteeringChecked = false;
     isSteeringStabilizationChecked = false;
     isLineOnImageChecked = false;
+    isROIVerticalFlipChecked = true;
 
     map_filters_checked_status_["isHorizontalFlipChecked"] = &isHorizontalFlipChecked;
     map_filters_checked_status_["isVerticalFlipChecked"] = &isVerticalFlipChecked;
@@ -37,6 +38,7 @@ void ADASFilter::Init() {
     map_filters_checked_status_["isGaussianChecked"] = &isGaussianChecked;
     map_filters_checked_status_["isCannyChecked"] = &isCannyChecked;
     map_filters_checked_status_["isROIChecked"] = &isROIChecked;
+    map_filters_checked_status_["isROIVerticalFlipChecked"] = &isROIVerticalFlipChecked;
     map_filters_checked_status_["isLineOnlyChecked"] = &isLineOnlyChecked;
     map_filters_checked_status_["isSteeringChecked"] = &isSteeringChecked;
     map_filters_checked_status_["isSteeringStabilizationChecked"] = &isSteeringStabilizationChecked;
@@ -533,7 +535,8 @@ cv::Mat ADASFilterRunnable::ProcessADAS(cv::Mat &src) {
 
     if(filter_->isROIChecked) {
 
-        if(!filter_->is_camera_on_) {
+        //if(!filter_->is_camera_on_) {
+        if(filter_->isROIVerticalFlipChecked) {
             cv::flip(img_filtered, img_filtered, 0);
             is_flipped = !is_flipped;
         }

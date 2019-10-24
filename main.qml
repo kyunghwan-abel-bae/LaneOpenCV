@@ -61,6 +61,5 @@ ApplicationWindow {
         videoOutput: output
 
         outputFilter: adasFilter
-
     }
 }

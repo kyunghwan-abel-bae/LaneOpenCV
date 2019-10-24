@@ -288,7 +288,7 @@ Rectangle {
 
             Item {
                 width: 1
-                height: root.height * 0.01
+                height: root.height * 0.03
             }
 
 
@@ -369,6 +369,7 @@ Rectangle {
                 onIsGaussianCheckedChanged: mapFilterBool.isGaussianChecked = isGaussianChecked
                 onIsCannyCheckedChanged: mapFilterBool.isCannyChecked = isCannyChecked
                 onIsROICheckedChanged: mapFilterBool.isROIChecked = isROIChecked
+                onIsROIVerticalFlipCheckedChanged: mapFilterBool.isROIVerticalFlipChecked = isROIVerticalFlipChecked
                 onIsLineOnlyCheckedChanged: mapFilterBool.isLineOnlyChecked = isLineOnlyChecked
                 onIsSteeringCheckedChanged: mapFilterBool.isSteeringChecked = isSteeringChecked
                 onIsSteeringStabilizationCheckedChanged: mapFilterBool.isSteeringStabilizationChecked = isSteeringStabilizationChecked
