@@ -40,13 +40,15 @@ Row {
         width: parent.width * 0.25
         height: parent.height
 
-        font.pixelSize: fontPixelSize
-        validator: IntValidator { bottom: 0; top: 9999 }
-
         text: valueX
 
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
+
+        font.pixelSize: fontPixelSize
+        validator: IntValidator { bottom: 0; top: 9999 }
+
+        inputMethodHints: Qt.ImhDigitsOnly
 
         Keys.onPressed: {
             // enter pressed
@@ -94,6 +96,8 @@ Row {
 
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
+
+        inputMethodHints: Qt.ImhDigitsOnly
 
         Keys.onPressed: {
             // enter pressed

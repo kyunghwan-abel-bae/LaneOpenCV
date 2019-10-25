@@ -37,6 +37,7 @@ Row {
         validator: IntValidator { bottom: 0; top: 255 }
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
+        inputMethodHints: Qt.ImhDigitsOnly
 
         Component.onCompleted: text = valueB
 
@@ -74,6 +75,7 @@ Row {
         validator: IntValidator { bottom: 0; top: 255 }
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
+        inputMethodHints: Qt.ImhDigitsOnly
 
         Component.onCompleted: text = valueG
 
@@ -111,6 +113,7 @@ Row {
         validator: IntValidator { bottom: 0; top: 255 }
         leftPadding: width * 0.2
         horizontalAlignment: Text.AlignHCenter
+        inputMethodHints: Qt.ImhDigitsOnly
 
         Component.onCompleted: text = valueR
 

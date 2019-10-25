@@ -38,8 +38,13 @@ ApplicationWindow {
     InputPanel {
         id: virtualKeyboard
 
-        enabled: false
-        visible: false
+        y: Qt.inputMethod.visible ? parent.height - virtualKeyboard.height : parent.height
+        z: 100
+
+        opacity: 0.5
+
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 
     MultiVideoOutput {

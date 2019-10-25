@@ -8,7 +8,16 @@ SOURCES += main.cpp \
 
 RESOURCES += qml.qrc
 
+static {
+    QT += svg
+    QTPLUGIN += qtvirtualkeyboardplugin
+}
+
 linux:!android {
+
+
+DEFINES += MAIN_QML=\\\"main_with_virtualkeyboard.qml\\\"
+CONFIG += disable-desktop
 
 INCLUDEPATH += /usr/local/include
 
@@ -24,9 +33,14 @@ LIBS += -L/home/abel/gsl_arm/lib \
 }
 
 android {
+
+DEFINES += MAIN_QML=\\\"main.qml\\\"
+
 }
 
 osx {
+
+DEFINES += MAIN_QML=\\\"main.qml\\\"
 
 INCLUDEPATH += "/usr/local/Cellar/gsl/2.5/include"
 
@@ -54,6 +68,13 @@ QML_DESIGNER_IMPORT_PATH =
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+
+# edit by KH -- should be erased
+#disable-desktop|!isEmpty(CROSS_COMPILE)|qnx {
+#    DEFINES += MAIN_QML=\\\"main.qml\\\"
+#} else {
+#    DEFINES += MAIN_QML=\\\"main_with_virtualkeyboard.qml\\\"
+#}
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.

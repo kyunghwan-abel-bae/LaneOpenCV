@@ -60,6 +60,7 @@ Row {
 
             maximumLength: 3
             validator: IntValidator { bottom: 0; top: 255 }
+            inputMethodHints: Qt.ImhDigitsOnly
 
             background: Item {
                 Rectangle {
